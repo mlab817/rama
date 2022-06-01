@@ -199,6 +199,9 @@ return [
         'vehicle_inventory_table' => 'vehicle_inventory',
         'vehicle_inventory_model' => Encore\Admin\Auth\Database\VehicleInventory::class,
 
+        'operators_table' => 'operators',
+        'operators_model' => \App\Models\Operator::class,
+
         // Route table and model.
         'routes_table' => 'routes',
         'routes_model' => Encore\Admin\Auth\Database\Route::class,
@@ -428,7 +431,7 @@ return [
     'extensions' => [
 
         'chartjs' => [
-        
+
             // Set to `false` if you want to disable this extension
             'enable' => true,
         ]

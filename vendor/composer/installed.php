@@ -1,15 +1,33 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '46ac429d5d4aa747b14f589a8ee50c0a8c71ed66',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
+        'barryvdh/laravel-debugbar' => array(
+            'pretty_version' => 'v3.6.7',
+            'version' => '3.6.7.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../barryvdh/laravel-debugbar',
+            'aliases' => array(),
+            'reference' => 'b96f9820aaf1ff9afe945207883149e1c7afb298',
+            'dev_requirement' => false,
+        ),
+        'barryvdh/laravel-snappy' => array(
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../barryvdh/laravel-snappy',
+            'aliases' => array(),
+            'reference' => '2c18a3602981bc6f25b32908cf8aaa05952ab2f7',
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.9.3',
             'version' => '0.9.3.0',
@@ -403,6 +421,15 @@
                 0 => 'v9.11.0',
             ),
         ),
+        'knplabs/knp-snappy' => array(
+            'pretty_version' => 'v1.4.1',
+            'version' => '1.4.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../knplabs/knp-snappy',
+            'aliases' => array(),
+            'reference' => '5126fb5b335ec929a226314d40cd8dad497c3d67',
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -428,12 +455,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '46ac429d5d4aa747b14f589a8ee50c0a8c71ed66',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -506,6 +533,15 @@
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
             'reference' => 'ff6248ea87a9f116e78edd6002e39e5128a0d4dd',
+            'dev_requirement' => false,
+        ),
+        'maximebf/debugbar' => array(
+            'pretty_version' => 'v1.18.0',
+            'version' => '1.18.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../maximebf/debugbar',
+            'aliases' => array(),
+            'reference' => '0d44b75f3b5d6d41ae83b79c7a4bceae7fbc78b6',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
@@ -1056,6 +1092,15 @@
             'install_path' => __DIR__ . '/../symfony/css-selector',
             'aliases' => array(),
             'reference' => '1955d595c12c111629cc814d3f2a2ff13580508a',
+            'dev_requirement' => false,
+        ),
+        'symfony/debug' => array(
+            'pretty_version' => 'v4.4.41',
+            'version' => '4.4.41.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/debug',
+            'aliases' => array(),
+            'reference' => '6637e62480b60817b9a6984154a533e8e64c6bd5',
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(

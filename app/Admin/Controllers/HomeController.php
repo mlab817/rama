@@ -14,8 +14,8 @@ class HomeController extends Controller
     {
         return $content
             ->title('Dashboard')
-            ->description('Description...');
-            // ->row(Dashboard::charts());
+            ->description('Description...')
+             ->row(Dashboard::charts());
             /*->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {
