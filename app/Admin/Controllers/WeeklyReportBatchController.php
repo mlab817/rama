@@ -57,7 +57,7 @@ class WeeklyReportBatchController extends AdminController
         $show->field('end_date', __('End Date'));
 
         $show->weekly_reports('Weekly Reports', function ($weekly_report) {
-            $weekly_report->setResource('/auth/weekly_reports');
+            $weekly_report->setResource('/weekly-reports');
 
             $weekly_report->id();
             $weekly_report->operator()->name();
@@ -65,7 +65,7 @@ class WeeklyReportBatchController extends AdminController
                 return Storage::url('files/' . $val->filepath);
             });
 
-            $weekly_report->quickSearch('operator.name', 'Search operator...');
+//            $weekly_report->quickSearch('operator.name', 'Search operator...');
         });
 
         return $show;

@@ -24,7 +24,13 @@ return new class extends Migration
             $table->foreignId('operator_id')
                 ->constrained('operators')
                 ->cascadeOnDelete();
-            $table->text('filepath');
+            $table->text('filepath')
+                ->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
             $table->timestamps();
         });
 

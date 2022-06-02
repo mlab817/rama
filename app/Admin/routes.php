@@ -1,7 +1,9 @@
 <?php
 
 use App\Admin\Controllers\OperatorController;
+use App\Admin\Controllers\TripController;
 use App\Admin\Controllers\WeeklyReportBatchController;
+use App\Admin\Controllers\WeeklyReportController;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -15,6 +17,10 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('operators', OperatorController::class);
-    $router->get('/weekly-reports/generate', 'WeeklyReportBatchController@generate');
-    $router->resource('weekly-reports', WeeklyReportBatchController::class);
+    $router->get('/report-batches/generate', 'WeeklyReportBatchController@generate');
+    $router->resource('report-batches', WeeklyReportBatchController::class);
+
+    $router->resource('weekly-reports', WeeklyReportController::class);
+
+    $router->resource('trips', TripController::class);
 });

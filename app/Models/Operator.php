@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Encore\Admin\Auth\Database\Region;
-use Encore\Admin\Auth\Database\VehicleInventory;
+use Encore\Admin\Auth\Database\Route;
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,11 +26,22 @@ class Operator extends Model
 
     public function vehicles()
     {
-        return $this->hasMany(VehicleInventory::class, 'operator', 'name');
+        return $this->hasMany(Vehicle::class, 'operator', 'name');
     }
 
     public function region()
     {
         return $this->belongsTo(Region::class);
+    }
+
+    public function route()
+    {
+        return $this->belongsTo(Route::class, 'code', 'code')
+            ->withDefault(['code' => 'N/A', 'name' => 'Missing Route']);
+    }
+
+    public function weekly_reports()
+    {
+        return $this->hasMany(WeeklyReport::class);
     }
 }

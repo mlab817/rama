@@ -28,3 +28,9 @@ Route::get('/healthcheck', function() {
 });
 
 Route::get('/androidlogin',[App\Admin\Controllers\AndroidLogin::class, 'login']);
+
+Route::get('/test', function () {
+    $puvDetails = (new \App\Services\GenerateTripsService())->execute();
+
+    return response()->json($puvDetails);
+});

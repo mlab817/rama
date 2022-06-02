@@ -41,9 +41,6 @@
     </style>
 </head>
 <body>
-<div style="position: fixed; bottom: 10px; right: 10px; z-index: 999" class="noprint">
-    <a href="{{ route('reports.viewReport', array_merge(request()->all(), ['print' => true])) }}" target="_blank" class="btn btn-success">Save as PDF</a>
-</div>
 
 <div class="container py-3">
     <p>{{ today()->format('M d, Y') }}</p>
@@ -51,13 +48,13 @@
     <p style="font-size: 1.5em; letter-spacing: 2px;" class="fw-bolder text-center text-uppercase">Certification</p>
 
     <p class="mt-2">
-        This is to certify the trip report under route code: <strong>{{ $operator->route->code }} ({{ $operator->route->name }})</strong>
+        This is to certify the trip report under route code: <strong>{{ $operator->route->code ?? 'No route code' }} ({{ $operator->route->name ?? 'No route name' }})</strong>
         with the below <strong>{{ $operator->vehicles->count() }}</strong> units  of  <strong>{{ $operator->mode }}</strong> downloaded from {{ config('app.name') }}.
         The data covers the operations from <strong>Week {{ $week_no }} ({{ format_date($start_date) }} to {{ format_date($end_date) }} )</strong>.
     </p>
 
     <p>
-        This certification is issued upon the request of <strong>{{ $operator->operator_name }}</strong> as supporting document
+        This certification is issued upon the request of <strong>{{ $operator->name }}</strong> as supporting document
         for the trip details of all units included herein.
     </p>
 

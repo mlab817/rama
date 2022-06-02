@@ -19,4 +19,14 @@ class WeeklyReport extends Model
     {
         return $this->belongsTo(Operator::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function weekly_report_batch()
+    {
+        return $this->belongsTo(WeeklyReportBatch::class);
+    }
 }

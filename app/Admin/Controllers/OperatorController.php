@@ -9,6 +9,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Storage;
 
 class OperatorController extends AdminController
 {
@@ -72,6 +73,17 @@ class OperatorController extends AdminController
 
             $vehicle->quickSearch('plate_no')
                 ->placeholder('Search plate nos...');
+        });
+
+        $show->weekly_reports('Weekly Reports', function ($report) {
+            $report->setResource('/weekly-reports');
+
+            $report->weekly_report_batch()->week_no('Batch');
+            $report->weekly_report_batch()->start_date('Start Date');
+            $report->weekly_report_batch()->end_date('End Date');
+            $report->filepath()->link(function ($val) {
+                return Storage::url($val->filepath);
+            });
         });
 
         return $show;
