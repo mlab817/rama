@@ -19,7 +19,11 @@ class WeeklyReportBatchController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Weekly Report';
+    protected $title = 'Weekly Report Batch';
+
+    protected $description = [
+        'index' => 'Click show on a report batch to view attached weekly reports'
+    ];
 
     /**
      * Make a grid builder.
@@ -30,7 +34,7 @@ class WeeklyReportBatchController extends AdminController
     {
         $grid = new Grid(new WeeklyReportBatch());
 
-        $grid->column('id', __('Id'));
+//        $grid->column('id', __('Id'));
         $grid->column('week_no', __('Week no'));
         $grid->column('start_date', __('Begin Date'));
         $grid->column('end_date', __('End Date'));
@@ -51,19 +55,21 @@ class WeeklyReportBatchController extends AdminController
     {
         $show = new Show(WeeklyReportBatch::findOrFail($id));
 
-        $show->field('id', __('Id'));
         $show->field('week_no', __('Week No.'));
         $show->field('start_date', __('Begin Date'));
         $show->field('end_date', __('End Date'));
 
         $show->weekly_reports('Weekly Reports', function ($weekly_report) {
-            $weekly_report->setResource('/weekly-reports');
+            $weekly_report->setResource('/auth/weekly-reports');
 
             $weekly_report->id();
             $weekly_report->operator()->name();
-            $weekly_report->filepath('File')->link(function ($val) {
-                return Storage::url('files/' . $val->filepath);
-            });
+            $weekly_report->filepath('File')
+                ->display(function () {
+                    return $this->filepath
+                        ? '<a href="'. Storage::url($this->filepath) .'">Download</a>'
+                        : 'No attachment';
+                });
 
 //            $weekly_report->quickSearch('operator.name', 'Search operator...');
         });

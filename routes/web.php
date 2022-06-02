@@ -34,3 +34,5 @@ Route::get('/test', function () {
 
     return response()->json($puvDetails);
 });
+
+Route::redirect('/', '/auth');

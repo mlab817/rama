@@ -38,7 +38,7 @@ class WeeklyReportController extends AdminController
                 return 'Week No. ' . $this->weekly_report_batch->week_no;
             });
         $grid->column('operator.name', __('Operator'));
-        $grid->column('filepath', __('Filepath'))
+        $grid->column('filepath', __('Attachment'))
             ->display(function () {
                 return $this->filepath
                     ? '<a target="_blank" href="' . Storage::url($this->filepath) . '">Download</a>'
