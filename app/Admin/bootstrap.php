@@ -19,3 +19,7 @@
  */
 
 Encore\Admin\Form::forget(['map', 'editor']);
+
+\Encore\Admin\Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+    $navbar->add('');
+});

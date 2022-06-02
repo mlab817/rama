@@ -8,7 +8,6 @@ use App\Models\Region;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\VehicleInventory;
-use Illuminate\Support\Facades\DB;
 
 class Dashboard
 {
@@ -54,7 +53,7 @@ class Dashboard
                 'cardColor' => 'blue',
                 'cardTitle' => 'No. of Onboarded Operators',
                 'cardValue' => number_format(Operator::count()),
-                'cardAction'=> url('/operators')
+                'cardAction'=> url('/auth/operators')
             ]);
     }
 
@@ -78,7 +77,7 @@ class Dashboard
                 'cardColor' => 'red',
                 'cardTitle' => 'Total No. of Trips',
                 'cardValue' => number_format(Trip::count()),
-                'cardAction'=> url('/trips')
+                'cardAction'=> url('/auth/trips')
             ]);
     }
 }

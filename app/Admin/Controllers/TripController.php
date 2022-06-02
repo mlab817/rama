@@ -18,7 +18,7 @@ class TripController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Trip';
+    protected $title = 'Trips';
 
     /**
      * Make a grid builder.
