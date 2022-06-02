@@ -10,6 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class WeeklyReportBatchController extends AdminController
 {
@@ -54,6 +55,18 @@ class WeeklyReportBatchController extends AdminController
         $show->field('week_no', __('Week No.'));
         $show->field('start_date', __('Begin Date'));
         $show->field('end_date', __('End Date'));
+
+        $show->weekly_reports('Weekly Reports', function ($weekly_report) {
+            $weekly_report->setResource('/auth/weekly_reports');
+
+            $weekly_report->id();
+            $weekly_report->operator()->name();
+            $weekly_report->filepath('File')->link(function ($val) {
+                return Storage::url('files/' . $val->filepath);
+            });
+
+            $weekly_report->quickSearch('operator.name', 'Search operator...');
+        });
 
         return $show;
     }

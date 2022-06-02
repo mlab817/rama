@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use Illuminate\Support\Facades\{Auth,DB};
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -17,12 +18,12 @@ class AndroidLogin extends Controller
             {
                 $isActive = DB::table('users')->where('username', $request->username)->value('is_active');
                 $data = DB::table('users')->where('username',$request->username)->first();
-                
-                if($isActive=="1"){       
+
+                if($isActive=="1"){
                     if ($data->updated_at !== null) {
                         $updated = true;
                     }
-            
+
                     return response()->json([
                         'status'=> true,
                         'message' => "Login Successful!",
@@ -54,7 +55,7 @@ class AndroidLogin extends Controller
                 if ($data->updated_at !== null) {
                     $updated = true;
                 }
-    
+
                 if ($data !== null) {
                     return response()->json([
                         'status'=> true,
@@ -70,7 +71,7 @@ class AndroidLogin extends Controller
                     return response()->json([
                         'status'=> false,
                         'message' => "Login Invalid",
-                    ], 200); 
+                    ], 200);
                 }
             } else {
                 return response()->json([
@@ -82,7 +83,7 @@ class AndroidLogin extends Controller
             return response()->json([
                 'status'=> false,
                 'message' => "Login Invalid",
-            ], 200);   
+            ], 200);
          }
 
     }

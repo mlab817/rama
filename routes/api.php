@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('api.login');
+Route::post('/login-via-qr', [\App\Http\Controllers\Api\AuthController::class, 'loginViaQr'])->name('api.loginViaQr');

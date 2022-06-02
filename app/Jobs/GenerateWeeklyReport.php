@@ -6,14 +6,17 @@ use App\Models\Operator;
 use App\Models\WeeklyReport;
 use App\Models\WeeklyReportBatch;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Faker\Provider\File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GenerateWeeklyReport implements ShouldQueue
 {
@@ -24,6 +27,8 @@ class GenerateWeeklyReport implements ShouldQueue
     public $start_date;
 
     public $end_date;
+
+    use WithFaker;
 
     /**
      * Create a new job instance.
@@ -60,34 +65,36 @@ class GenerateWeeklyReport implements ShouldQueue
                 continue;
             }
 
-            $operator->load([
-                'vehicles.trips' => function ($query) {
-                    $query->where('start_date', ">=", $this->start_date)
-                        ->where('end_date', "<=", $this->end_date);
-                }
-            ]);
+//            $operator->load([
+//                'vehicles.trips' => function ($query) {
+//                    $query->where('start_date', ">=", $this->start_date)
+//                        ->where('end_date', "<=", $this->end_date);
+//                }
+//            ]);
 
-            $this->generatePdfAndStore($this->weeklyReportBatch, $operator);
+            $this->generatePdfAndStore($operator);
         }
     }
 
-    public function generatePdfAndStore($weeklyReportBatch, $operator)
+    public function generatePdfAndStore($operator)
     {
-        $pdf = SnappyPdf::loadView('report', [
-            'operator' => $operator,
-            'week_no' => $weeklyReportBatch->week_no,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date
-        ]);
+//        $pdf = SnappyPdf::loadView('report', [
+//            'operator' => $operator,
+//            'week_no' => $weeklyReportBatch->week_no,
+//            'start_date' => $this->start_date,
+//            'end_date' => $this->end_date
+//        ]);
+//
+//        $filename = strtolower(preg_replace('/[^A-Za-z0-9\-\_]/', '', $operator->operator_name));
+//
+//        $filepath = "reports/batch {$weeklyReportBatch->id}/{$operator->id} - {$filename}.pdf";
+//
+//        Storage::put($filepath, $pdf->output());
 
-        $filename = strtolower(preg_replace('/[^A-Za-z0-9\-\_]/', '', $operator->operator_name));
-
-        $filepath = "reports/batch {$weeklyReportBatch->id}/{$operator->id} - {$filename}.pdf";
-
-        Storage::put($filepath, $pdf->output());
+        $filepath = Str::random(60);
 
         $weeklyReport = WeeklyReport::create([
-            'weekly_report_batch_id' => $weeklyReportBatch->id,
+            'weekly_report_batch_id' => $this->weeklyReportBatch->id,
             'operator_id' => $operator->id,
             'filepath' => $filepath,
         ]);
