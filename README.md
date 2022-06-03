@@ -83,24 +83,24 @@ Run to install: `composer require barryvdh/laravel-snappy php-open-source-saver/
 
 ### Screenshots
 
-![Dashboard](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.31 AM.png)
+![Dashboard](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.31%20AM.png)
 
-![Operators](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.40 AM.png)
+![Operators](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.40%20AM.png)
 
-![Create Operator](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.55 AM.png)
+![Create Operator](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.55%20AM.png)
 
-![Edit Operator](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.59 AM.png)
+![Edit Operator](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.59%20AM.png)
 
-![Trips](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.45 AM.png)
+![Trips](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.45%20AM.png)
 
-![Edit TRIP](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.57.00 AM.png)
+![Edit TRIP](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.57.00%20AM.png)
 
-![Weekly Report Batch](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.48 AM.png)
+![Weekly Report Batch](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.48%20AM.png)
 
-![Create Weekly Report Batch](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.54.51 AM.png)
+![Create Weekly Report Batch](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.54.51%20AM.png)
 
-![Weekly Report batch Detail](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.55.05 AM.png)
+![Weekly Report batch Detail](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.55.05%20AM.png)
 
-![Create Weekly Report](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.55.07 AM.png)
+![Create Weekly Report](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.55.07%20AM.png)
 
-![View Weekly Reports](/public/assets/screenshots/Screen Shot 2022-06-03 at 10.55.42 AM.png)
+![View Weekly Reports](/public/assets/screenshots/Screen%20Shot%202022-06-03%20at%2010.55.42%20AM.png)`
