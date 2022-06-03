@@ -1,64 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+### Description:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- These enhancements allow users to generate reports on trips.
+- (optional) REST API for loginViaCredentials, loginViaQr, and scanQr
+- (optional) Adds dashboard
 
-## About Laravel
+### New Dependencies:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+`"barryvdh/laravel-snappy": "^1.0"`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Required to generate PDF reports
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+`"php-open-source-saver/jwt-auth": "^1.4"`
 
-## Learning Laravel
+> Required to use API login
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Run to install: `composer require barryvdh/laravel-snappy php-open-source-saver/jwt-auth`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### New files
 
-## Laravel Sponsors
+| Directory/File | Description |
+|--------------|-------------|
+| __New__ | |
+| [app\Admin\Actions\Trip\Invalidate.php](/mlab817/rama/blob/main/app/Admin/Actions/Trip/Invalidate.php) | Add a dropdown button to invalidate trip in Trips grid |
+| [app\Admin\Actions\Trip\Validate.php](/mlab817/rama/blob/main/app/Admin/Actions/Trip/Validate.php) | Add a dropdown button to validate trip in Trips grid  |
+| [app\Admin\Controllers\OperatorController.php](/mlab817/rama/blob/main/app/Admin/Controllers/OperatorController.php) | Admin controller for operators |
+| [app\Admin\Controllers\TripController.php](/mlab817/rama/blob/main/app/Admin/Controllers/TripController.php) | Admin controller for trips |
+| [app\Admin\Controllers\WeeklyReportBatchController.php](/mlab817/rama/blob/main/app/Admin/Controllers/WeeklyReportBatchController.php) | Admin controller for weekly report batches |
+| [app\Admin\Controllers\WeeklyReportController.php](/mlab817/rama/blob/main/app/Admin/Controllers/WeeklyReportController.php) | Admin controller for weekly reports. _Note: accessible only within weekly report batch_ |
+| [app\Console\Commands\SyncTripsCommand.php](/mlab817/rama/blob/main/app/Console/Commands/SyncTripsCommand.php) | Command to sync trips table to puv_details table |
+| [app\Http\Controllers\Api\AuthController.php](/mlab817/rama/blob/main/app/Http/Controllers/Api/AuthController.php) | New loginViaCredentials and loginViaQr methods |
+| [app\Http\Controllers\Api\ScanQRController.php](/mlab817/rama/blob/main/app/Http/Controllers/Api/ScanQRController.php) | New invoke method for scanning QR |
+| [app\Jobs\GenerateWeeklyReportJob.php](/mlab817/rama/blob/main/app/Jobs/GenerateWeeklyReportJob.php) | Job to generate weekly report. _Note: This is queued._ |
+| [app\Models\Mode.php](/mlab817/rama/blob/main/app/Models/Mode.php) | Model for modes/vehicle types |
+| [app\Models\Notification.php](/mlab817/rama/blob/main/app/Models/Notification.php) | Model that extends DatabaseNotification to facilitate marking notifications as read |
+| [app\Models\Operator.php](/mlab817/rama/blob/main/app/Models/Operator.php) | Model for operators including relationships |
+| [app\Models\PuvAttendance.php](/mlab817/rama/blob/main/app/Models/PuvAttendance.php) | Model for puv_attendance table for creation and retrieval |
+| [app\Models\PuvDetail.php](/mlab817/rama/blob/main/app/Models/PuvDetail.php) | Model for puv_details table for creation and retrieval |
+| [app\Models\Region.php](/mlab817/rama/blob/main/app/Models/Region.php) | Model for regions table to generate report |
+| [app\Models\Trip.php](/mlab817/rama/blob/main/app/Models/Trip.php) | Model for trips table |
+| [app\Models\Vehicle.php](/mlab817/rama/blob/main/app/Models/Vehicle.php) | Model that extends VehicleInventory for relationships |
+| [app\Models\WeeklyReportBatch.php](/mlab817/rama/blob/main/app/Models/WeeklyReportBatch.php) | Model for weekly report batches |
+| [app\Models\WeeklyReport.php](/mlab817/rama/blob/main/app/Models/WeeklyReport.php) | Model for weekly reports |
+| [app\Notifications\WeeklyReportGeneratedNotification.php](/mlab817/rama/blob/main/app/Notifications/WeeklyReportGeneratedNotification.php) | Notification for when weekly report has been generated |
+| [app\Services\GenerateTripsService.php](/mlab817/rama/blob/main/app/Services/GenerateTripsService.php) | Service for generating trips, used by SyncTripsCommand |
+| [app\Services\GenerateWeeklyReportService.php](/mlab817/rama/blob/main/app/Services/GenerateWeeklyReportService.php) | Service for generating weekly report |
+| [app\Dashboard.php](/mlab817/rama/blob/main/app/Dashboard.php) | Defines custom dashboard for HomeController |
+| [app\helpers.php](/mlab817/rama/blob/main/app/helpers.php) | Defines new global functions |
+| [resources\views\dashboard\chart.blade.php](/mlab817/rama/blob/main/resources/views/dashboard/chart.blade.php) |  Custom chart for dashboard |
+| [resources\views\navbar\notifications.blade.php](/mlab817/rama/blob/main/resources/views/navbar/notifications.blade.php) | View for notifications icon in navbar including dropdown |
+| [resources\views\card.blade.php](/mlab817/rama/blob/main/resources/views/card.blade.php) | Custom card for use in dashboard |
+| [resources\views\report.blade.php](/mlab817/rama/blob/main/resources/views/report.blade.php) | Report template for PDF generation |
+| __Updated__ | |
+| [app\Admin\Controllers\HomeController.php](/mlab817/rama/blob/main/app/Admin/Controllers/HomeController.php) | Updated Dashboard referenced |
+| [app\Admin\bootstrap.php](/mlab817/rama/blob/main/app/Admin/bootstrap.php) | Added notification icon in Navbar |
+| [app\Admin\routes.php](/mlab817/rama/blob/main/app/Admin/routes.php) | Added routes for new controllers _(see above)_|
+| [app\Console\Kernel.php](/mlab817/rama/blob/main/app/Console/Kernel.php) | Added scheduled command for syncing trips |
+| [app\Models\User.php](/mlab817/rama/blob/main/app/Models/User.php) | Added JWT features |
+| [routes\api.php](/mlab817/rama/blob/main/routes/api.php) | Added new routes for API controllers |
+| [routes\web.php](/mlab817/rama/blob/main/routes/web.php) | Added route for marking notifications as read |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### New tables and attributes
 
-### Premium Partners
+| Table              | Attributes                                                                                 |Description                                     | 
+|--------------|----------------------------------------------------------|---------------------------------|
+| modes           | id, name, description                                                              | Reference table for vehicle type |
+| operators      | id, region_id, name, contact_number, email, full_address | Table for operators                       |
+| weekly_report_batches | id, week_no, start_date, end_date, user_id       | Table for weekly report batches |
+| weekly_reports | id, weekly_report_batch_id, operator_id, filepath           | Table for weekly reports              |
+| trips               | id, plate_no, start_date, start_time, end_date, end_time, station_id, bound, is_validated, user_id | Table for trips |
+| notifications | id, type, notifiable, data, read_at                                            | Default laravel notifications table |
+| operator_route | operator_id, route_code                                                      | Table for operator - route combination |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Seeders
 
-## Contributing
+- [OperatorSeeder](/mlab817/rama/blob/main/database/seeders/OperatorSeeder.php)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+> Populates the operators table by taking the distinct names from the vehicle inventory table
 
-## Code of Conduct
+- [OperatorRouteSeeder](/mlab817/rama/blob/main/database/seeders/OperatorRouteSeeder.php)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> Populates the operator_route table based on vehicle inventory table
 
-## Security Vulnerabilities
+### Screenshots
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
