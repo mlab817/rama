@@ -70,6 +70,9 @@ Run to install: `composer require barryvdh/laravel-snappy php-open-source-saver/
 | trips               | id, plate_no, start_date, start_time, end_date, end_time, station_id, bound, is_validated, user_id | Table for trips |
 | notifications | id, type, notifiable, data, read_at                                            | Default laravel notifications table |
 | operator_route | operator_id, route_code                                                      | Table for operator - route combination |
+| puv_details    | trip_id                                                     | Define a reference with trips table |
+
+To install: run the migration files as [migration.sql](/database/sql/migration.sql)
 
 ### Seeders
 
