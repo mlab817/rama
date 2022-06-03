@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Operator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Encore\Admin\Auth\Database\VehicleInventory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,6 +19,8 @@ class OperatorSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
+
+        DB::table('operators')->truncate();
 
         $uniqueOperators = VehicleInventory::select('operator','region_id')->distinct()->get();
 
