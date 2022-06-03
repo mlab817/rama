@@ -21,5 +21,9 @@
 Encore\Admin\Form::forget(['map', 'editor']);
 
 \Encore\Admin\Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
-    $navbar->add('');
+    $user = \App\Models\User::find(auth()->id());
+
+    $notifications = $user->unreadNotifications ?? [];
+
+    $navbar->add(view('navbar.notifications', compact('user','notifications')));
 });

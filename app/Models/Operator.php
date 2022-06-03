@@ -8,10 +8,12 @@ use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Operator extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     use ModelTree;
     use AdminBuilder;
@@ -34,10 +36,9 @@ class Operator extends Model
         return $this->belongsTo(Region::class);
     }
 
-    public function route()
+    public function routes()
     {
-        return $this->belongsTo(Route::class, 'code', 'code')
-            ->withDefault(['code' => 'N/A', 'name' => 'Missing Route']);
+        return $this->belongsToMany(Route::class, 'operator_route');
     }
 
     public function weekly_reports()

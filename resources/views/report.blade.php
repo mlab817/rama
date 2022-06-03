@@ -48,7 +48,14 @@
     <p style="font-size: 1.5em; letter-spacing: 2px;" class="fw-bolder text-center text-uppercase">Certification</p>
 
     <p class="mt-2">
-        This is to certify the trip report under route code: <strong>{{ $operator->route->code ?? 'No route code' }} ({{ $operator->route->name ?? 'No route name' }})</strong>
+        This is to certify the trip report under route code:
+        <strong>
+            @if (count($operator->routes) > 0)
+                {{ implode(', ', $operator->routes->pluck('code')->toArray()) }}
+                @else
+                No routes identified
+            @endif
+        </strong>
         with the below <strong>{{ $operator->vehicles->count() }}</strong> units  of  <strong>{{ $operator->mode }}</strong> downloaded from {{ config('app.name') }}.
         The data covers the operations from <strong>Week {{ $week_no }} ({{ format_date($start_date) }} to {{ format_date($end_date) }} )</strong>.
     </p>

@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Trip\Invalidate;
+use App\Admin\Actions\Trip\Validate;
 use App\Models\Trip;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Station;
@@ -31,9 +33,14 @@ class TripController extends AdminController
 
         $grid->disableCreateButton();
 
+        $grid->actions(function ($actions) {
+            $actions->add(new Validate);
+            $actions->add(new Invalidate);
+        });
+
         $grid->column('plate_no', __('Plate no'))
             ->display(function () {
-                return '<a href="/trips?plate_no='. $this->plate_no .'">'. $this->plate_no.'</a>';
+                return '<a href="/auth/trips?plate_no='. $this->plate_no .'">'. $this->plate_no.'</a>';
             });
         $grid->column('start_date', __('Start date'));
         $grid->column('start_time', __('Start time'));
@@ -42,11 +49,22 @@ class TripController extends AdminController
         $grid->column('duration', __('Duration (mins)'))
             ->display(function () {
                 return (int) Carbon::parse($this->end_time)->diffInMinutes($this->start_time);
-            });
+            })
+            ->setAttributes(['class' => 'text-center']);
         $grid->column('station.name', __('Station'));
         $grid->column('bound', __('Bound'));
 //        $grid->column('created_at', __('Created at'));
 //        $grid->column('updated_at', __('Updated at'));
+
+        $grid->column('is_validated', __('Validated'))
+            ->display(function () {
+                return $this->is_validated == 1
+                    ? '<i class="fa fa-check text-success"></i>'
+                    : ($this->is_validated == -1 ? '<i class="fa fa-close text-danger"></i>' : '<i class="fa fa-square-o"></i>');
+            })
+            ->setAttributes(['class' => 'text-center']);
+
+        $grid->column('user.username', __('By'));
 
         $grid->expandFilter();
 
@@ -81,6 +99,11 @@ class TripController extends AdminController
         $show->field('end_time', __('End time'));
         $show->field('station.name', __('Station'));
         $show->field('bound', __('Bound'));
+        $show->is_validated()->as(function ($val) {
+            return $val == 1
+                ? 'Validated'
+                : ($val == -1 ? 'Invalid' : 'N/A');
+            });
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -112,6 +135,15 @@ class TripController extends AdminController
                 'NORTH' => 'NORTH',
                 'SOUTH' => 'SOUTH'
             ]);
+        $form->radio('is_validated',__('Mark as Validated'))
+            ->options([
+                '1' => 'Valid',
+                '-1' => 'Invalid',
+            ])
+            ->default('-1')
+            ->stacked();
+        $form->hidden('user_id')
+            ->default(auth()->id());
 
         return $form;
     }

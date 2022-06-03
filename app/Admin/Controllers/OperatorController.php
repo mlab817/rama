@@ -29,9 +29,9 @@ class OperatorController extends AdminController
     {
         $grid = new Grid(new Operator());
 
-        $grid->column('id', __('Id'));
-        $grid->column('region.name', __('Region'));
-        $grid->column('name', __('Operator'));
+//        $grid->column('id', __('Id'));
+        $grid->column('region.name', __('Region'))->sortable();
+        $grid->column('name', __('Operator'))->sortable();
         $grid->column('contact_number', __('Contact No.'));
         $grid->column('email', __('Email Address'));
         $grid->column('full_address', __('Full Address'));
@@ -76,7 +76,7 @@ class OperatorController extends AdminController
         });
 
         $show->weekly_reports('Weekly Reports', function ($report) {
-            $report->setResource('/weekly-reports');
+            $report->setResource('/auth/weekly-reports');
 
             $report->weekly_report_batch()->week_no('Batch');
             $report->weekly_report_batch()->start_date('Start Date');

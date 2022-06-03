@@ -9,13 +9,20 @@ use Illuminate\Routing\Router;
 Admin::routes();
 
 Route::group([
-    'prefix'        => 'auth',
+    'prefix'        => config('admin.route.prefix'),
     'namespace'     => config('admin.route.namespace'),
     'middleware'    => config('admin.route.middleware'),
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
-
+    //
     $router->get('/', 'HomeController@index')->name('home');
+});
+
+Route::group([
+    'prefix' => 'auth',
+    'middleware'    => config('admin.route.middleware'),
+], function (Router $router) {
+
     $router->resource('operators', OperatorController::class);
     $router->get('/report-batches/generate', 'WeeklyReportBatchController@generate');
     $router->resource('report-batches', WeeklyReportBatchController::class);

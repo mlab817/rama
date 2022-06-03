@@ -29,10 +29,5 @@ Route::get('/healthcheck', function() {
 
 Route::get('/androidlogin',[App\Admin\Controllers\AndroidLogin::class, 'login']);
 
-Route::get('/test', function () {
-    $puvDetails = (new \App\Services\GenerateTripsService())->execute();
-
-    return response()->json($puvDetails);
-});
-
-Route::redirect('/', '/auth');
+Route::post('/notifications', \App\Http\Controllers\ReadNotificationController::class)
+    ->name('notifications.read');

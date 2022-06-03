@@ -21,12 +21,26 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->time('end_time')->nullable();
             $table->unsignedInteger('station_id')->nullable();
+
+            $table->string('bound');
+
+            // -1 invalid, 0 no action, 1 valid
+            $table->tinyInteger('is_validated')->default(0); // default to false
+            $table->unsignedInteger('user_id')
+                ->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->foreign('station_id')
                 ->references('id')
                 ->on('stations')
                 ->nullOnDelete();
-            $table->string('bound');
-            $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete();
         });
     }
 

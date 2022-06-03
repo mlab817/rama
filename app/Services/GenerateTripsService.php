@@ -12,17 +12,25 @@ class GenerateTripsService
 {
     public function execute()
     {
+        $previousTrip = null;
+
+//        Schema::disableForeignKeyConstraints();
+
+//        DB::table('trips')->truncate();
+
+        $lastDateTimeEntry = Trip::orderBy('end_date')
+            ->orderBy('end_time')
+            ->latest()
+            ->first();
+
         $puvDetails = PuvDetail::orderBy('plate_no')
             ->orderBy('date_scanned')
             ->orderBy('time_scanned')
             ->orderBy('bound')
+//            ->where('date','>=',$lastDateTimeEntry->end_date)
+//            ->where('time','>=', $lastDateTimeEntry->end_time)
+            ->whereNull('trip_id') // get entries with no trip_id yet
             ->get();
-
-        $previousTrip = null;
-
-        Schema::disableForeignKeyConstraints();
-
-        DB::table('trips')->truncate();
 
         foreach ($puvDetails as $detail) {
             if ($detail->trip == 'START') {
@@ -48,7 +56,7 @@ class GenerateTripsService
             Log::info($previousTrip);
         }
 
-        Schema::disableForeignKeyConstraints();
+//        Schema::disableForeignKeyConstraints();
 
         return Trip::all();
     }
