@@ -105,3 +105,17 @@ CREATE TABLE `weekly_reports` (
   CONSTRAINT `weekly_reports_operator_id_foreign` FOREIGN KEY (`operator_id`) REFERENCES `operators` (`id`) ON DELETE CASCADE,
   CONSTRAINT `weekly_reports_weekly_report_batch_id_foreign` FOREIGN KEY (`weekly_report_batch_id`) REFERENCES `weekly_report_batches` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- rama add trip_id column to puv_details table
+
+ALTER TABLE
+    `puv_details`
+    ADD `trip_id` bigint unsigned DEFAULT NULL AFTER `plate_no`;
+ALTER TABLE
+    `puv_details` ADD KEY `puv_details_FK` (`trip_id`);
+ALTER TABLE
+    `puv_details`
+    ADD CONSTRAINT `puv_details_FK`
+        FOREIGN KEY (`trip_id`)
+            REFERENCES `trips` (`id`)
+            ON DELETE SET NULL;
