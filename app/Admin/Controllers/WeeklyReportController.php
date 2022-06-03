@@ -59,7 +59,11 @@ class WeeklyReportController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(WeeklyReport::findOrFail($id));
+        $weeklyReport = WeeklyReport::findOrFail($id);
+
+        $show = new Show($weeklyReport);
+
+        $show->setResource(route('report-batches.show', $weeklyReport->weekly_report_batch));
 
 //        $show->field('id', __('Id'));
         $show->field('weekly_report_batch.week_no', __('Report batch'));
@@ -79,6 +83,10 @@ class WeeklyReportController extends AdminController
     protected function form()
     {
         $form = new Form(new WeeklyReport());
+
+        $form->tools(function ($tools) {
+            $tools->disableList();
+        });
 
         $operators = Operator::select('id','name')
             ->get()
@@ -107,6 +115,8 @@ class WeeklyReportController extends AdminController
 
         $form->saved(function (Form $form) {
             GenerateWeeklyReportJob::dispatch($form->model(), auth()->id());
+
+            return redirect()->route('report-batches.show', $form->model()->weekly_report_batch);
         });
 
         return $form;

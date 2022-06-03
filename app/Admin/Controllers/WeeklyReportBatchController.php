@@ -60,6 +60,12 @@ class WeeklyReportBatchController extends AdminController
     {
         $show = new Show(WeeklyReportBatch::findOrFail($id));
 
+        $show->panel()
+            ->tools(function ($tools) {
+                $tools->disableEdit();
+                $tools->disableDelete();
+            });
+
         $show->field('week_no', __('Week No.'));
         $show->field('start_date', __('Begin Date'));
         $show->field('end_date', __('End Date'));
