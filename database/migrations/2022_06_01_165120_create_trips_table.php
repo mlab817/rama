@@ -24,6 +24,8 @@ return new class extends Migration
 
             $table->string('bound');
 
+            $table->string('route_code');
+
             // -1 invalid, 0 no action, 1 valid
             $table->tinyInteger('is_validated')->default(0); // default to false
             $table->unsignedInteger('user_id')

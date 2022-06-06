@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PuvDetail;
 use App\Models\Trip;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ class GenerateTripsService
 
 //        DB::table('trips')->truncate();
 
+        // get the last date_time entry from the trips table
         $lastDateTimeEntry = Trip::orderBy('end_date')
             ->orderBy('end_time')
             ->latest()
@@ -33,6 +35,9 @@ class GenerateTripsService
             ->get();
 
         foreach ($puvDetails as $detail) {
+            // retrieve vehicle info to extract current route_code
+            $vehicle = Vehicle::where('plate_no', $detail->plate_no)->first();
+
             if ($detail->trip == 'START') {
                 $previousTrip = Trip::create([
                     'plate_no' => $detail->plate_no,
@@ -40,6 +45,7 @@ class GenerateTripsService
                     'start_time' => $detail->time_scanned,
                     'bound' => $detail->bound,
                     'station_id' => $detail->station_id,
+                    'route_code' => $vehicle->route_code,
                 ]);
             }
 

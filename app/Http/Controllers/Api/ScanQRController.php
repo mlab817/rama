@@ -24,6 +24,7 @@ class ScanQRController extends Controller
             'time_scanned'  => 'required|date_format:H:i:s',
             'station_id'    => 'required|exists:stations,id',
             'bound'         => 'required|in:' . implode(',', PuvDetail::BOUNDS), // remember to change this if the values change
+            'trip'          => 'required',
         ]);
 
         // create entry in PUV attendance
@@ -34,7 +35,7 @@ class ScanQRController extends Controller
         // assumes that the last part of the string is plate no
         // this is to avoid cases for operators that have "/"
         // in their names
-        $plate_no = count($array) > 0 ? $array[count($array)-1] : null;
+        $plate_no = trim( count($array) > 0 ? $array[count($array)-1] : null );
 
         // validate that plate no exists
         if (! Vehicle::where('plate_no', $plate_no)->exists()) {
@@ -52,7 +53,8 @@ class ScanQRController extends Controller
             'time_scanned'  => $request->time_scanned,
             'station_id'    => $request->station_id,
             'bound'         => $request->bound,
-            'user_id'       => auth('api')->id()
+            'trip'          => $request->trip,
+            'user_id'       => auth('api')->id(),
         ]);
 
         return response()->json([
