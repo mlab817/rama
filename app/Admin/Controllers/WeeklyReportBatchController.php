@@ -105,11 +105,6 @@ class WeeklyReportBatchController extends AdminController
             'after_or_equal' => 'Sorry, we do not do time travel here'
         ]);
 
-        $form->saved(function (Form $form) {
-            Log::info($form->model()->id);
-            GenerateWeeklyReport::dispatch($form->model()->id);
-        });
-
         return $form;
     }
 }

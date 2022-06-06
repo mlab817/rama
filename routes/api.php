@@ -24,3 +24,7 @@ Route::post('/login-via-qr', [\App\Http\Controllers\Api\AuthController::class, '
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/scan-qr', \App\Http\Controllers\Api\ScanQRController::class)->name('api.scan-qr');
 });
+
+Route::get('/stations', function () {
+   return response()->json(\Encore\Admin\Auth\Database\Station::where('region_id', 1)->get());
+});

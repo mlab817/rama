@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (! $token = auth('api')->attempt($request->only('username','password'))) {
             return response()->json([
                 'status'  => false,
-                'message' => 'Incorrect username or password'
+                'message' => 'Incorrect username or password',
             ]);
         }
 

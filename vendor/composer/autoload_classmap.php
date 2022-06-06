@@ -211,6 +211,7 @@ return array(
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
     'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
+    'Database\\Seeders\\OperatorRouteSeeder' => $baseDir . '/database/seeders/OperatorRouteSeeder.php',
     'Database\\Seeders\\OperatorSeeder' => $baseDir . '/database/seeders/OperatorSeeder.php',
     'Database\\Seeders\\PuvDetailSeeder' => $baseDir . '/database/seeders/PuvDetailSeeder.php',
     'DebugBar\\Bridge\\CacheCacheCollector' => $vendorDir . '/maximebf/debugbar/src/DebugBar/Bridge/CacheCacheCollector.php',
