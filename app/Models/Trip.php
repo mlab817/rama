@@ -13,14 +13,19 @@ class Trip extends Model
     use HasFactory;
     use SoftDeletes;
 
+    // TODO: add start_user_id, start_station_id, end_user_id, end_station_id
     protected $fillable = [
         'plate_no',
         'start_date',
         'start_time',
+        'start_user_id',
+        'start_station_id',
         'end_date',
         'end_time',
+        'end_user_id',
+        'end_station_id',
         'bound',
-        'station_id',
+        'remarks',
         'user_id',
     ];
 

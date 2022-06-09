@@ -24,7 +24,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->resource('operators', OperatorController::class);
-    $router->get('/report-batches/generate', 'WeeklyReportBatchController@generate');
+//    $router->get('/report-batches/generate', 'WeeklyReportBatchController@generate');
     $router->resource('report-batches', WeeklyReportBatchController::class);
 
     $router->resource('weekly-reports', WeeklyReportController::class);

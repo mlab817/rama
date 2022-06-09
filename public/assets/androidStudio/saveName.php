@@ -17,11 +17,15 @@ if($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 if($_POST['detail']){
     $long_array_info = $_POST['detail'];
     if(!empty($long_array_info)){
-        $result = explode('/',$long_array_info);
+        $result = explode('/', $long_array_info);
+        // validate that $result
+
         $save_data = $connection->prepare("INSERT INTO puv_details (date_scanned, time_scanned, station_id, bound, plate_no, user_id) VALUES ( '$result[5]', '$result[6]', '$result[0]', '$result[1]', '$result[4]', '$result[2]')");
         $save_data->execute();
         $success1 = true;
     }
+
+
 }
 
 if($_POST['name']){

@@ -31,6 +31,9 @@ return new class extends Migration
             $table->unsignedInteger('user_id')
                 ->nullable();
 
+            $table->text('remarks')
+                ->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 

@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\VehicleInventory;
+use Illuminate\Database\Eloquent\Builder;
 
 class Dashboard
 {
@@ -47,12 +48,17 @@ class Dashboard
 
     public static function onboardedOperators()
     {
+        $operatorCount = Operator::whereHas('vehicles', function (Builder $query) {
+            $query->where('vehicle_inventory.is_active', true)
+                ->where('vehicle_inventory.is_onboarded', true);
+        })->count();
+
         return view('card')
             ->with([
                 'cardIcon'  => 'gears',
                 'cardColor' => 'blue',
                 'cardTitle' => 'No. of Onboarded Operators',
-                'cardValue' => number_format(Operator::count()),
+                'cardValue' => $operatorCount,
                 'cardAction'=> url('/auth/operators')
             ]);
     }

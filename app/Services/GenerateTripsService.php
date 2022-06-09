@@ -32,38 +32,36 @@ class GenerateTripsService
 //            ->where('date','>=',$lastDateTimeEntry->end_date)
 //            ->where('time','>=', $lastDateTimeEntry->end_time)
             ->whereNull('trip_id') // get entries with no trip_id yet
-            ->get();
+            ->chunk(100, function ($data) {
+                foreach ($data as $detail) {
+                    // retrieve vehicle info to extract current route_code
+                    $vehicle = Vehicle::where('plate_no', $detail->plate_no)->first();
 
-        foreach ($puvDetails as $detail) {
-            // retrieve vehicle info to extract current route_code
-            $vehicle = Vehicle::where('plate_no', $detail->plate_no)->first();
+                    if ($detail->trip == 'START') {
+                        $previousTrip = Trip::create([
+                            'plate_no' => $detail->plate_no,
+                            'start_date' => $detail->date_scanned,
+                            'start_time' => $detail->time_scanned,
+                            'bound' => $detail->bound,
+                            'station_id' => $detail->station_id,
+                            'route_code' => $vehicle->route_code,
+                        ]);
+                    }
 
-            if ($detail->trip == 'START') {
-                $previousTrip = Trip::create([
-                    'plate_no' => $detail->plate_no,
-                    'start_date' => $detail->date_scanned,
-                    'start_time' => $detail->time_scanned,
-                    'bound' => $detail->bound,
-                    'station_id' => $detail->station_id,
-                    'route_code' => $vehicle->route_code,
-                ]);
-            }
+                    if ($detail->trip == 'END' && $previousTrip->plate_no == $detail->plate_no) {
+                        $previousTrip->update([
+                            'end_date' => $detail->date_scanned,
+                            'end_time' => $detail->time_scanned,
+                        ]);
+                    }
 
-            if ($detail->trip == 'END' && $previousTrip->plate_no == $detail->plate_no) {
-                $previousTrip->update([
-                    'end_date' => $detail->date_scanned,
-                    'end_time' => $detail->time_scanned,
-                ]);
-            }
+                    $detail->trip_id = $previousTrip->id ?? null;
+                    $detail->save();
+                }
+            });
 
-            $detail->trip_id = $previousTrip->id ?? null;
-            $detail->save();
 
-            Log::info($previousTrip);
-        }
 
 //        Schema::disableForeignKeyConstraints();
-
-        return Trip::all();
     }
 }

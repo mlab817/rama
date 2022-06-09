@@ -7,6 +7,7 @@ use App\Models\WeeklyReport;
 use App\Models\WeeklyReportBatch;
 use App\Notifications\WeeklyReportGeneratedNotification;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,13 +41,20 @@ class GenerateWeeklyReportService
                 'routes',
             ]);
 
+//            dd($operator);
+
             Log::info($operator->routes);
 
             $pdf = SnappyPdf::loadView('report', [
+                'dateToday' => Carbon::now()->format('M d, Y'),
+                'routes' => implode(', ', $operator->routes->pluck('code')->toArray()),
+                'vehicleCount' => $operator->vehicles->count(),
+                'appName' => config('app.name'),
                 'operator' => $operator,
                 'week_no' => $weeklyReportBatch->week_no,
                 'start_date' => $weeklyReportBatch->start_date,
-                'end_date' => $weeklyReportBatch->end_date
+                'end_date' => $weeklyReportBatch->end_date,
+                'generatedDateTime' => Carbon::now(),
             ]);
 
             // cleanup filename
@@ -56,7 +64,7 @@ class GenerateWeeklyReportService
             $filepath = "reports/batch {$weeklyReportBatch->id}/{$operator->id} - {$filename}.pdf";
 
             // store file
-            Storage::put($filepath, $pdf->output());
+            Storage::disk('s3')->put($filepath, $pdf->output());
 
             // add filepath to weekly report
             $weeklyReport->filepath = $filepath;

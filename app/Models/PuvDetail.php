@@ -15,11 +15,18 @@ class PuvDetail extends Model
         'time_scanned',
         'station_id',
         'bound',
+        'trip',
         'user_id',
     ];
 
     public const BOUNDS = [
         'NORTH',
         'SOUTH',
+    ];
+
+    public const TRIPS = [
+        'START',
+        'END',
+        'IN-TRANSIT',
     ];
 }

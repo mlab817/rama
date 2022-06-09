@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\GenerateWeeklyReportJob;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,27 @@ Route::get('/androidlogin',[App\Admin\Controllers\AndroidLogin::class, 'login'])
 
 Route::post('/notifications', \App\Http\Controllers\ReadNotificationController::class)
     ->name('notifications.read');
+
+Route::get('/sync-trips', function () {
+    \Illuminate\Support\Facades\Artisan::call('trips:sync');
+
+    return 'done syncing';
+});
+
+Route::get('/schedule-run', function () {
+    \Illuminate\Support\Facades\Artisan::call('schedule:run');
+
+    return 'schedule ran';
+});
+
+Route::get('/queue-work', function () {
+    \Illuminate\Support\Facades\Artisan::call('queue:work');
+
+    return 'queue ran';
+});
+
+Route::get('/test', function () {
+    $weeklyReport = \App\Models\WeeklyReport::find(1);
+
+    $result = GenerateWeeklyReportJob::dispatch($weeklyReport, auth()->id());
+});

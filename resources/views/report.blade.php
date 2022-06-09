@@ -43,20 +43,18 @@
 <body>
 
 <div class="container py-3">
-    <p>{{ today()->format('M d, Y') }}</p>
+    <p>
+        {{ $dateToday }}
+    </p>
 
     <p style="font-size: 1.5em; letter-spacing: 2px;" class="fw-bolder text-center text-uppercase">Certification</p>
 
     <p class="mt-2">
         This is to certify the trip report under route code:
         <strong>
-            @if (count($operator->routes) > 0)
-                {{ implode(', ', $operator->routes->pluck('code')->toArray()) }}
-                @else
-                No routes identified
-            @endif
+            {{ $routes }}
         </strong>
-        with the below <strong>{{ $operator->vehicles->count() }}</strong> units  of  <strong>{{ $operator->mode }}</strong> downloaded from {{ config('app.name') }}.
+        with the below <strong>{{ $vehicleCount }}</strong> units  of  <strong>{{ $operator->mode }}</strong> downloaded from {{ $appName }}.
         The data covers the operations from <strong>Week {{ $week_no }} ({{ format_date($start_date) }} to {{ format_date($end_date) }} )</strong>.
     </p>
 
@@ -147,7 +145,7 @@
                     <tr class="text-center">
                         <td colspan="100%">{{ $vehicle->plate_no }}</td>
                     </tr>
-                    <tr class="text-center bg-danger">
+                    <tr class="text-center">
                         <td colspan="100%">No trips</td>
                     </tr>
                 @endif
@@ -179,6 +177,10 @@
 
     <p>
         Date / Time received  : _____________________
+    </p>
+
+    <p class="fst-italic">
+        Generated on: {{ $generatedDateTime }}
     </p>
 </div>
 

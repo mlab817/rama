@@ -2,8 +2,9 @@
 
 namespace App\Admin\Controllers;
 
-use App\Jobs\GenerateWeeklyReport;
+//use App\Jobs\GenerateWeeklyReport;
 use App\Models\WeeklyReportBatch;
+use Carbon\Carbon;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -78,8 +79,10 @@ class WeeklyReportBatchController extends AdminController
             $weekly_report->filepath('File')
                 ->display(function () {
                     return $this->filepath
-                        ? '<a href="'. Storage::url($this->filepath) .'">Download</a>'
-                        : 'No attachment';
+                        ? '<a target="_blank" href="' . Storage::disk('s3')->temporaryUrl($this->filepath, Carbon::now()->addMinutes(60), [
+                            'ResponseContentType' => 'application/octet-stream',
+                        ]) . '">Download</a>'
+                        : '';
                 });
 
 //            $weekly_report->quickSearch('operator.name', 'Search operator...');

@@ -53,8 +53,7 @@ class TripController extends AdminController
             ->setAttributes(['class' => 'text-center']);
         $grid->column('station.name', __('Station'));
         $grid->column('bound', __('Bound'));
-//        $grid->column('created_at', __('Created at'));
-//        $grid->column('updated_at', __('Updated at'));
+        $grid->column('remarks', __('Remarks'));
 
         $grid->column('is_validated', __('Validated'))
             ->display(function () {
@@ -104,8 +103,7 @@ class TripController extends AdminController
                 ? 'Validated'
                 : ($val == -1 ? 'Invalid' : 'N/A');
             });
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('remarks');
 
         return $show;
     }
@@ -142,6 +140,7 @@ class TripController extends AdminController
             ])
             ->default('-1')
             ->stacked();
+        $form->textarea('remarks', __('Remarks'));
         $form->hidden('user_id')
             ->default(auth()->id());
 
